@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>학교생활 MBTI 🌸</title>
+<style>
+body{
+font-family:Arial;
+background:#ffeef8;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+.box{
+width:400px;
+background:white;
+padding:20px;
+border-radius:20px;
+box-shadow:0 0 10px pink;
+text-align:center;
+}
+button{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:none;
+border-radius:10px;
+background:#bde9ff;
+font-size:16px;
+cursor:pointer;
+}
+button:hover{
+background:#ffd1e8;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+<h2>🏫🌸 학교생활 MBTI 🐰</h2>
+<div id="quiz"></div>
+</div>
+
+<script>
+const q=[
+["쉬는시간엔?","친구들과 논다 😆","혼자 쉰다 📚","E","I"],
+["조별과제는?","리더 😎","조용한 팀원 🙂","E","I"],
+["숙제는?","미리 끝낸다 ✅","마감 직전 🔥","J","P"],
+["시험공부는?","계획 세운다 📝","즉흥 😅","J","P"],
+["수업은?","사실 위주 📖","상상하며 💡","S","N"],
+["축제는?","새 아이디어 🎈","익숙한 방법 🎀","N","S"],
+["친구 고민은?","공감 💖","해결책 💡","F","T"],
+["발표는?","좋다 🎤","싫다 😳","E","I"]
+];
+
+let s={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
+let i=0;
+
+function show(){
+
+if(i==q.length){
+
+let mbti=
+(s.E>=s.I?"E":"I")+
+(s.S>=s.N?"S":"N")+
+(s.T>=s.F?"T":"F")+
+(s.J>=s.P?"J":"P");
+
+document.getElementById("quiz").innerHTML=
+`<h1>${mbti} 🎉</h1>
+<p>✨ 당신의 학교생활 MBTI입니다!</p>
+<button onclick="location.reload()">다시하기 🔄</button>`;
+return;
+}
+
+document.getElementById("quiz").innerHTML=
+`<h3>${q[i][0]}</h3>
+<button onclick="ans('${q[i][3]}')">${q[i][1]}</button>
+<button onclick="ans('${q[i][4]}')">${q[i][2]}</button>`;
+}
+
+function ans(x){
+s[x]++;
+i++;
+show();
+}
+
+show();
+</script>
+
+</body>
+</html>
