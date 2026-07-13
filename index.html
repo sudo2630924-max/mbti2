@@ -1,94 +1,360 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>학교생활 MBTI 🌸</title>
-<style>
-body{
-font-family:Arial;
-background:#ffeef8;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-margin:0;
-}
-.box{
-width:400px;
-background:white;
-padding:20px;
-border-radius:20px;
-box-shadow:0 0 10px pink;
-text-align:center;
-}
-button{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:none;
-border-radius:10px;
-background:#bde9ff;
-font-size:16px;
-cursor:pointer;
-}
-button:hover{
-background:#ffd1e8;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏫 나의 학교생활 MBTI 테스트 🎒</title>
+    <style>
+        /* ✨ 폰트 & 파스텔톤 스타일링 ✨ */
+        @import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Jua&display=swap');
+
+        :root {
+            --bg-color: #FFF5F5;
+            --card-color: #FFFFFF;
+            --primary-pastel: #FFD1DC; /* 파스텔 핑크 */
+            --secondary-pastel: #DEF3FF; /* 파스텔 블루 */
+            --accent-pastel: #E8F5E9; /* 파스텔 그린 */
+            --text-color: #4A4A4A;
+        }
+
+        body {
+            font-family: 'Jua', 'Gamja Flower', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--card-color);
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(255, 182, 193, 0.4);
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            border: 4px dashed var(--primary-pastel);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #FF6B8B;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0px #FFE4E1;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        /* 🔄 화면 전환용 클래스 */
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 📜 진행바 (Progress Bar) */
+        .progress-container {
+            background-color: #EEE;
+            border-radius: 20px;
+            height: 15px;
+            width: 100%;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-color: #FFB6C1;
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* 🖱️ 버튼 스타일 */
+        .btn {
+            background-color: var(--secondary-pastel);
+            border: 2px solid #BCE2FA;
+            border-radius: 20px;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-family: 'Jua', sans-serif;
+            color: #4A4A4A;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 15px;
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+            box-shadow: 0 4px 0px #BCE2FA;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background-color: #C5E9FF;
+            box-shadow: 0 7px 0px #BCE2FA;
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0px #BCE2FA;
+        }
+
+        .start-btn {
+            background-color: var(--primary-pastel);
+            border-color: #FFA6B9;
+            box-shadow: 0 4px 0px #FFA6B9;
+            font-size: 1.4rem;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .start-btn:hover {
+            background-color: #FFB6C1;
+            box-shadow: 0 7px 0px #FFA6B9;
+        }
+
+        /* 🏆 결과 화면 뱃지 */
+        .result-badge {
+            background-color: #FFF0F5;
+            border: 3px dotted #FF6B8B;
+            padding: 15px;
+            border-radius: 20px;
+            font-size: 1.5rem;
+            color: #FF6B8B;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .result-desc {
+            background-color: #F9F9F9;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: left;
+            line-height: 1.6;
+            font-size: 1.05rem;
+            border-left: 5px solid #FFB6C1;
+        }
+
+        .deco-img {
+            font-size: 4rem;
+            margin: 20px 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
 </head>
 <body>
 
-<div class="box">
-<h2>🏫🌸 학교생활 MBTI 🐰</h2>
-<div id="quiz"></div>
-</div>
+    <div class="container">
+        <!-- 🏠 메인 시작 화면 -->
+        <div id="start-page" class="page active">
+            <div class="deco-img">🏫🎒✨</div>
+            <h1>나의 학교생활<br>MBTI 테스트</h1>
+            <p>두근두근! 학교에서 나는 어떤 캐릭터일까?<br>나의 교실 속 성향을 알아보자능! 💖</p>
+            <button class="btn start-btn" onclick="startTest()">✨ 테스트 시작하기! ✨</button>
+        </div>
 
-<script>
-const q=[
-["쉬는시간엔?","친구들과 논다 😆","혼자 쉰다 📚","E","I"],
-["조별과제는?","리더 😎","조용한 팀원 🙂","E","I"],
-["숙제는?","미리 끝낸다 ✅","마감 직전 🔥","J","P"],
-["시험공부는?","계획 세운다 📝","즉흥 😅","J","P"],
-["수업은?","사실 위주 📖","상상하며 💡","S","N"],
-["축제는?","새 아이디어 🎈","익숙한 방법 🎀","N","S"],
-["친구 고민은?","공감 💖","해결책 💡","F","T"],
-["발표는?","좋다 🎤","싫다 😳","E","I"]
-];
+        <!-- 📝 질문 화면 -->
+        <div id="question-page" class="page">
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="question-emoji" style="font-size: 3rem; margin-bottom: 10px;">🤔</div>
+            <h2 id="question-text" style="font-size: 1.5rem; margin-bottom: 30px;">질문 텍스트</h2>
+            <div id="options-container">
+                <!-- 버튼들이 자바스크립트로 생성됩니다 -->
+            </div>
+        </div>
 
-let s={E:0,I:0,S:0,N:0,T:0,F:0,J:0,P:0};
-let i=0;
+        <!-- 🏆 결과 화면 -->
+        <div id="result-page" class="page">
+            <div class="deco-img">🎉🥳⭐</div>
+            <h2>✨ 당신의 학교생활 유형은? ✨</h2>
+            <div id="result-mbti" class="result-badge">MBTI</div>
+            <p id="result-title" style="font-size: 1.4rem; font-weight: bold; color: #FF6B8B;"></p>
+            <div id="result-desc" class="result-desc"></div>
+            <button class="btn start-btn" style="margin-top: 30px;" onclick="restartTest()">🔄 다시 테스트하기 🔄</button>
+        </div>
+    </div>
 
-function show(){
+    <script>
+        // 📚 질문 데이터 (학교생활 맞춤형)
+        const questions = [
+            {
+                emoji: "🏫",
+                q: "새 학기 첫날, 교실 문을 열고 들어섰을 때 나는?",
+                a: "오우! 안녕 안녕! 눈 마주치는 애들한테 먼저 인사를 건넨다 😆👋",
+                b: "조용히 빈자리를 찾아가 앉아 먼저 말을 걸어주길 기다린다 🥺💧",
+                type: "EI"
+            },
+            {
+                emoji: "💬",
+                q: "쉬는 시간에 옆자리 친구가 쫑알쫑알 수다를 떨 때 나는?",
+                a: "리액션 폭발! 온몸으로 맞장구치며 대화에 몰입한다 🔥🗣️",
+                b: "조용히 경청하며 미소 짓고, 속으로는 '이제 곧 수업 종 치겠지?' 생각한다 🕒🫠",
+                type: "EI"
+            },
+            {
+                emoji: "😴",
+                q: "수업 시간, 선생님이 '자, 상상해 보세요~'라고 하시면 내 머릿속은?",
+                a: "우주선 타고 안드로메다 가거나 교실에 좀비 들이닥치는 상상함 🧟‍♂️🚀",
+                b: "그냥 선생님이 칠판에 적으시는 내용 필기하는 데 집중함 📝👀",
+                type: "SN"
+            },
+            {
+                emoji: "🎨",
+                q: "축제 때 우리 반 부스를 정하기로 했다! 내가 내는 아이디어는?",
+                a: "아무도 시도 안 해본 독특하고 빤짝이는 컨셉! (우주 마법 카페 같은 거) 🔮🌌",
+                b: "작년에 옆 동네 학교에서 대박 났던 검증된 떡볶이 판매 😋🔥",
+                type: "SN"
+            },
+            {
+                emoji: "😢",
+                q: "친구가 시험을 망쳐서 '나 시험 조졌어 대박 속상해..'라고 할 때 내 반응은?",
+                a: "헐 우짜노ㅠㅠ 진짜 속상하겠다.. 마라탕 먹으러 갈래? 🥺😭💖",
+                b: "헐 몇 점인데? 몇 번 문제 틀렸어? 다음엔 오답노트 해봐! 🧐📊",
+                type: "TF"
+            },
+            {
+                emoji: "💥",
+                q: "조별 과제 중, 빌런 조원이 자료 조사를 엉망으로 해왔을 때 나는?",
+                a: "단호하게 지적하고 다시 해오라고 하거나, 내 선에서 칼같이 잘라낸다 ✂️😤",
+                b: "속으로는 화가 나지만 기분 상할까봐 둥글게 말하거나 걍 내가 고친다 🥺💦",
+                type: "TF"
+            },
+            {
+                emoji: "🎒",
+                q: "내일 가방을 쌀 때 나의 가방 속 상태는?",
+                a: "시간표 딱 맞춰서 교과서, 필통, 포스트잇까지 완벽 세팅 🎒✨",
+                b: "응? 그냥 학교 사물함에 다 두고 다님. 몸만 가면 됨 🏃‍♂️💨",
+                type: "JP"
+            },
+            {
+                emoji: "📅",
+                q: "시험 기간이 다가왔을 때 나의 공부 계획은?",
+                a: "날짜별, 과목별로 아주 꼼꼼하게 계획표 스케줄러 짜놓음 🗓️✏️",
+                b: "일단 책은 펼치는데... 어라? '오늘 삘은 수학이다!' 하고 꼴리는 대로 함 🤪📘"
+            }
+        ];
 
-if(i==q.length){
+        // 🏆 결과 데이터
+        const results = {
+            "ESTJ": { title: "👑 전교 1등 야망 넘치는 전교회장", desc: "철저한 계획과 리더십으로 반을 이끄는 지휘관! 숙제 안 해온 애들 있으면 눈으로 레이저 쏨. 겉으론 엄격해 보여도 은근 츤데레 매력이 충만해요! 😎" },
+            "ESTP": { title: "🏃‍♂️ 교내 체육대회 MVP 만능 스포츠맨", desc: "말보다 몸이 먼저 움직이는 활력소! 쉬는 시간마다 축구공 들고 뛰어나감. 장난기 가득하고 인기도 많아서 교실 분위기 메이커를 담당해요 ⚽⚡" },
+            "ESFJ": { title: "🥰 모든 반 친구들의 다정한 마더 테레사", desc: "가방에 항상 간식이 들어있고 주변 친구들을 살뜰히 챙겨요. 반 친구들 생일은 알람 맞춰놓고 챙기는 따뜻한 프로 공감러! 🍬💌" },
+            "ESFP": { title: "🎉 축제 무대 찢어놓는 핵인싸 스타", desc: "지루한 교실 분위기는 절대 못 참아! 언제 어디서나 춤추고 노래할 준비가 되어있음. 리액션 장인에 유행하는 챌린지는 다 섭렵해야 직성이 풀려요 💃✨" },
+            "ENTJ": { title: "🎯 조별과제 버스 하드캐리 기사님", desc: "무임승차 빌런 조원들은 과감히 처단한다! 똑 부러지는 성격으로 비효율적인 상황을 극도로 싫어해요. 미래에 CEO가 될 재목 💼🔥" },
+            "ENTP": { title: "😈 선생님도 두 손 두 발 다 든 말싸움 대장", desc: "수업 시간에 엉뚱하지만 날카로운 질문 던져서 쌤 당황하게 만들기 1등. 토론 시간만 되면 눈이 반짝이고 장난기가 철철 넘쳐요 🤪🎤" },
+            "ENFJ": { title: "🌟 평화주의 댕댕이 반장님", desc: "모두가 친하게 지내는 행복한 교실을 꿈꿔요. 친구들의 고민 상담소 역할을 자처하며, 칭찬 아끼지 않는 리액션 요정 🐶💖" },
+            "ENFP": { title: "🦄 상상력 폭발하는 교실 속 유니콘", desc: "준비물 맨날 까먹지만 해맑음! 벼락치기 천재에 감수성이 풍부해요. 매일매일 새로운 하이텐션으로 친구들을 즐겁게 해 줍니다 🌈💫" },
+            "ISTJ": { title: "✍️ 사물함까지 각 잡힌 프로 필기러", desc: "시간표 연필꽂이 정리 완벽! 조용히 자기 할 일 똑 부러지게 하는 모범생 스타일이에요. 규칙 어기는 거 정말 싫어하고 아주 성실해요 📐✏️" },
+            "ISTP": { title: "🛹 뒷자리에서 조용히 포스 풍기는 장인", desc: "말수가 적고 무심해 보이지만 기계 만지거나 체육 할 때 대활약! 벼락치기 효율 끝판왕이며, 마이웨이 성향이 강해요 🛠️🕶️" },
+            "ISFJ": { title: "🧸 교실 구석 조용한 천사 우렁각시", desc: "나서는 건 싫어하지만 남들이 안 치운 쓰레기 슬쩍 줍는 천사. 친구들의 사소한 얘기도 다 기억해 뒀다가 감동을 주는 서포터 타입 👼🌾" },
+            "ISFP": { title: "🎨 프로 등교거부러 침대 위 아티스트", desc: "주말과 하교 후 침대 누워있을 때가 제일 행복해요. 예술적 감각이 뛰어나고 싸움을 싫어해서 유순하게 친구들에게 다 맞춰줍니다 🛌🎨" },
+            "INTJ": { title: "🔮 세계관 최강자 탑 시크릿 천재", desc: "친구가 별로 없어 보이지만 사실 지인 필터링이 깐깐한 것뿐! 혼자서 책 읽거나 생각하는 걸 좋아하고, 계획대로 안 되면 킹받아함 🧠👁️" },
+            "INTP": { title: "👽 가방 메고 등교하는 고독한 과학자", desc: "수업 시간엔 멍 때리는데 시험 보면 은근 잘 나옴. 관심 있는 분야(덕질, 게임 등) 파고들 때는 아무도 못 말리는 방구석 전문가 👾💻" },
+            "INFJ": { title: "📝 일기장에 소설 쓰는 비밀 가득 현자", desc: "생각이 너무 많아서 머릿속이 복잡해요. 겉으로는 조용히 맞춰주지만 속으로는 인간 분석 중! 글솜씨가 좋고 반전 매력이 있습니다 🔮📖" },
+            "INFP": { title: "🌸 감수성 폭발하는 교실 속 음유시인", desc: "이어폰 끼고 창밖 보면서 뮤직비디오 여주인공 빙의하기 장인. 작은 일에도 쿠쿠다스 심장이 되지만 상상력과 공감 능력만큼은 전교 1등 🎧🥺" }
+        };
 
-let mbti=
-(s.E>=s.I?"E":"I")+
-(s.S>=s.N?"S":"N")+
-(s.T>=s.F?"T":"F")+
-(s.J>=s.P?"J":"P");
+        let currentIdx = 0;
+        let score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
 
-document.getElementById("quiz").innerHTML=
-`<h1>${mbti} 🎉</h1>
-<p>✨ 당신의 학교생활 MBTI입니다!</p>
-<button onclick="location.reload()">다시하기 🔄</button>`;
-return;
-}
+        // 🚀 테스트 시작
+        function startTest() {
+            document.getElementById("start-page").classList.remove("active");
+            document.getElementById("question-page").classList.add("active");
+            showQuestion();
+        }
 
-document.getElementById("quiz").innerHTML=
-`<h3>${q[i][0]}</h3>
-<button onclick="ans('${q[i][3]}')">${q[i][1]}</button>
-<button onclick="ans('${q[i][4]}')">${q[i][2]}</button>`;
-}
+        // 📝 질문 보여주기
+        function showQuestion() {
+            if (currentIdx >= questions.length) {
+                showResult();
+                return;
+            }
 
-function ans(x){
-s[x]++;
-i++;
-show();
-}
+            // 만약 JP 질문군에 도달 시 하드코딩된 누락 타입 보정 (마지막 2개 질문은 JP 분기)
+            if(currentIdx === 6 || currentIdx === 7) {
+                questions[currentIdx].type = "JP";
+            }
 
-show();
-</script>
+            const qObj = questions[currentIdx];
+            document.getElementById("question-emoji").innerText = qObj.emoji;
+            document.getElementById("question-text").innerText = qObj.q;
 
+            // 진행바 업데이트
+            const percent = (currentIdx / questions.length) * 100;
+            document.getElementById("progress-bar").style.width = percent + "%";
+
+            // 버튼 생성
+            const container = document.getElementById("options-container");
+            container.innerHTML = `
+                <button class="btn" onclick="selectOption('A')">${qObj.a}</button>
+                <button class="btn" onclick="selectOption('B')">${qObj.b}</button>
+            `;
+        }
+
+        // 🖱️ 답변 선택 시 점수 계산
+        function selectOption(choice) {
+            const qObj = questions[currentIdx];
+            const type = qObj.type; // EI, SN, TF, JP
+
+            if (choice === 'A') {
+                score[type[0]]++;
+            } else {
+                score[type[1]]++;
+            }
+
+            currentIdx++;
+            showQuestion();
+        }
+
+        // 🏆 결과 도출 및 화면 노출
+        function showResult() {
+            document.getElementById("question-page").classList.remove("active");
+            document.getElementById("result-page").classList.add("active");
+
+            // MBTI 조합하기
+            let mbti = "";
+            mbti += (score.E >= score.I) ? "E" : "I";
+            mbti += (score.S >= score.N) ? "S" : "N";
+            mbti += (score.T >= score.F) ? "T" : "F";
+            mbti += (score.J >= score.P) ? "J" : "P";
+
+            const resultObj = results[mbti] || results["ENFP"]; // 에러 방지 기본값
+
+            document.getElementById("result-mbti").innerText = mbti;
+            document.getElementById("result-title").innerText = resultObj.title;
+            document.getElementById("result-desc").innerText = resultObj.desc;
+        }
+
+        // 🔄 다시하기 버튼
+        function restartTest() {
+            currentIdx = 0;
+            score = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            document.getElementById("result-page").classList.remove("active");
+            document.getElementById("start-page").classList.add("active");
+        }
+    </script>
 </body>
 </html>
